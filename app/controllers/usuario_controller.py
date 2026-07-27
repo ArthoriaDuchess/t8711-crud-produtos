@@ -15,24 +15,18 @@ class Usuario_Controller:
     def save(self):
 
         try:
-
             estados = self.estado_dao.get_all()
-
             if not estados:
 
                 self.view.exibir_mensagem(
                     "Cadastre um estado antes de cadastrar usuários.",
                     False
                 )
-
                 return
 
             self.view.exibir_estados(estados)
-
             id_estado = int(self.view.ler_estado())
-
             cidades = self.cidade_dao.get_by_estado(id_estado)
-
             if not cidades:
 
                 self.view.exibir_mensagem(

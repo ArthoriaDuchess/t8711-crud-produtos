@@ -51,11 +51,8 @@ class Cidade_DAO(DAO):
             self.desconectar(cursor, conexao)
 
     def get_all(self):
-
         conexao, cursor = self.conectar()
-
         try:
-
             sql = """
                     SELECT
                         ID,
@@ -66,29 +63,21 @@ class Cidade_DAO(DAO):
                     ORDER BY
                         NOME
                   """
-
             cursor.execute(sql)
 
             registros = cursor.fetchall()
-
             cidades = []
-
             for registro in registros:
-
                 estado = self._estado_dao.get_by_id(
                     registro[2]
                 )
-
                 cidades.append(
-
                     Cidade(
                         registro[0],
                         registro[1],
                         estado
                     )
-
                 )
-
             return cidades
 
         finally:
@@ -96,11 +85,8 @@ class Cidade_DAO(DAO):
             self.desconectar(cursor, conexao)
 
     def get_by_estado(self, id_estado):
-
         conexao, cursor = self.conectar()
-
         try:
-
             sql = """
                     SELECT
                         ID,
@@ -113,44 +99,31 @@ class Cidade_DAO(DAO):
                     ORDER BY
                         NOME
                   """
-
             cursor.execute(
                 sql,
                 (id_estado,)
             )
-
             registros = cursor.fetchall()
-
             cidades = []
-
             for registro in registros:
-
                 estado = self._estado_dao.get_by_id(
                     registro[2]
                 )
-
                 cidades.append(
-
                     Cidade(
                         registro[0],
                         registro[1],
                         estado
                     )
-
                 )
-
             return cidades
-
         finally:
 
             self.desconectar(cursor, conexao)
 
     def get_by_id(self, id):
-
         conexao, cursor = self.conectar()
-
         try:
-
             sql = """
                     SELECT
                         ID,
@@ -161,18 +134,15 @@ class Cidade_DAO(DAO):
                     WHERE
                         ID = %s
                   """
-
             cursor.execute(sql, (id,))
-
             registro = cursor.fetchone()
 
             if registro is None:
                 return None
-
+            
             estado = self._estado_dao.get_by_id(
                 registro[2]
             )
-
             return Cidade(
                 registro[0],
                 registro[1],
@@ -180,15 +150,11 @@ class Cidade_DAO(DAO):
             )
 
         finally:
-
             self.desconectar(cursor, conexao)
 
     def update(self, cidade):
-
         conexao, cursor = self.conectar()
-
         try:
-
             sql = """
                     UPDATE CIDADE
                     SET
@@ -206,43 +172,29 @@ class Cidade_DAO(DAO):
                     cidade.id
                 )
             )
-
             conexao.commit()
-
             return cursor.rowcount > 0
 
         except Exception as e:
-
             conexao.rollback()
             raise e
-
         finally:
-
             self.desconectar(cursor, conexao)
 
     def delete(self, id):
-
         conexao, cursor = self.conectar()
-
         try:
-
             sql = """
                     DELETE
                     FROM CIDADE
                     WHERE ID = %s
                   """
-
             cursor.execute(sql, (id,))
-
             conexao.commit()
-
             return cursor.rowcount > 0
 
         except Exception as e:
-
             conexao.rollback()
             raise e
-
         finally:
-
             self.desconectar(cursor, conexao)
