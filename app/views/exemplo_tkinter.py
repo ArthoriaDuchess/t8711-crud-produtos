@@ -10,6 +10,9 @@ class Janela_Exemplo:
         self.configurar_janela()
 
     def configurar_janela(self):
+        
+        
+        #ABA TITULO
         self.lbl_titulo = tk.Label(
             self.janela,
             text = "EXEMPLO DE CADASTRO",
@@ -22,6 +25,9 @@ class Janela_Exemplo:
             pady = 5,
             columnspan = 3
         )
+        
+        
+        #ABA DADOS
         self.frm_dados = tk.Frame(
             self.janela,
             padx = 10,
@@ -32,6 +38,9 @@ class Janela_Exemplo:
             row = 1,
             column = 0
         )
+        
+        
+        #ABA BOTOES
         self.frm_botoes = tk.Frame(
             self.janela,
             padx = 10,
@@ -44,7 +53,9 @@ class Janela_Exemplo:
             row = 2,
             column = 0
         )
-
+        
+        
+        #ABA NOME
         self.lbl_nome = tk.Label(
             self.frm_dados,
             text = "Nome:"
@@ -63,6 +74,9 @@ class Janela_Exemplo:
             row = 1,
             column = 1
         )
+        
+        
+        #ABA IDADE
         self.lbl_idade = tk.Label(
             self.frm_dados,
             text = "Idade"
@@ -81,6 +95,9 @@ class Janela_Exemplo:
             row = 2,
             column = 1
         )
+        
+        
+        #ABA BTN NOME
         self.btn_escrever_nome = tk.Button(
             self.frm_botoes,
             text = "Printar o nome",
@@ -93,7 +110,9 @@ class Janela_Exemplo:
             padx = 10,
             pady = 5
         )
-
+        
+        
+        #ABA BTN IDADE
         self.btn_avaliar_idade = tk.Button(
             self.frm_botoes,
             text = "Avaliar idade",
@@ -103,9 +122,14 @@ class Janela_Exemplo:
             row = 3,
             column = 1
         )
+        
+        
+        #ABA PRINT NOME
     def printar(self):
         print(self.txt_nome.get())
-
+        
+        
+        #ABA AVALIAR IDADE
     def avaliar_idade(self):
         if self.txt_idade.get() == "":
             messagebox.showerror(
@@ -125,8 +149,11 @@ class Janela_Exemplo:
             "Fedelho!!!!"
         )
         return
+    
+    #ABA INICIAR
     def iniciar(self):
         self.janela.mainloop()
 
+#METODO CHAMAR
 janelinha = Janela_Exemplo()
 janelinha.iniciar()
