@@ -291,13 +291,18 @@ class Fornecedor_View:
         )
         self.tbl_fornecedores.bind(
             "<<TreeviewSelect>>",
-            self.controller.fornecedor_selecionado
+            self.controller.selecionar_fornecedor
 
         )
     def preencher_campos(self, fornecedor):
 
         self.limpar_campos()
-
+        self.txt_id.config(state = "normal")
+        self.txt_id.insert(
+            0,
+            str(fornecedor.id)
+        )
+        self.txt_id.config(state = "readonly")
         self.txt_razao_social.insert(
             0,
             fornecedor.razao_social
@@ -315,7 +320,7 @@ class Fornecedor_View:
 
         self.txt_sla.insert(
             0,
-            fornecedor.sla_atendimento
+            str(fornecedor.sla_atendimento)
         )        
 
     def limpar_campos(self):
@@ -352,7 +357,7 @@ class Fornecedor_View:
         razao_social = self.txt_razao_social.get()
         nome_fantasia = self.txt_nome_fantasia.get()
         cnpj = self.txt_cnpj.get()
-        sla = self.txt_sla.get()
+        sla = int(self.txt_sla.get())
         return razao_social, nome_fantasia, cnpj, sla
     
     def exibir_mensagem(self, mensagem, sucesso=True):

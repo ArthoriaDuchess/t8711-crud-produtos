@@ -20,7 +20,7 @@ class Fornecedor_Controller:
     def get_all(self):
         fornecedores = self.dao.get_all()
         self.view.exibir_fornecedores(fornecedores)
-    def fornecedor_selecionado(self, event):
+    def selecionar_fornecedor(self, event):
 
         try:
 
@@ -35,35 +35,38 @@ class Fornecedor_Controller:
             )
 
         except IndexError:
-
             pass        
     def update(self):
         try:
-            fornecedores = self.dao.get_all()
-            self.view.exibir_fornecedores(fornecedores)
-            id_fornecedor = int(self.view.ler_id())
-            fornecedor_existente = self.dao.get_by_id(id_fornecedor)
-            if fornecedor_existente:
-                razao_social, nome_fantasia, cnpj, sla_atendimento = self.view.ler_dados_fornecedor(fornecedor_existente)
-                fornecedor_existente.atualizar_dados(razao_social, nome_fantasia, cnpj, sla_atendimento)
-                self.dao.update(fornecedor_existente)
-                self.view.exibir_mensagem("Fornecedor atualizado com sucesso!")
-            else:
-                self.view.exibir_mensagem("Fornecedor não encontrado.", False) 
+            if self.fornecedor_selecionado is None:
+                self.view.exibir_mensagem("Selecione um fornecedor na lista.", False)
+                return
+            razao_social, nome_fantasia, cnpj, sla_atendimento = self.view.ler_dados_fornecedor()
+            self.fornecedor_selecionado.atualizar_dados(razao_social, nome_fantasia, cnpj, sla_atendimento)
+            self.dao.update(self.fornecedor_selecionado)
+            self.get_all()
+            self.view.exibir_mensagem("Fornecedor atualizado com sucesso!")
         except ValueError as e:
             self.view.exibir_mensagem(f"Erro: {str(e)}", False)
-    def delete(self):    
+
+    def delete(self):
+        if self.fornecedor_selecionado is None:
+            self.view.exibir_mensagem("Selecione um fornecedor na lista.", False)
+            return
+        if not self.view.confirmar_exclusao():
+            return
         try:
-            fornecedores = self.dao.get_all()
-            self.view.exibir_fornecedores(fornecedores)
-            id_fornecedor = int(self.view.ler_id())
-            sucesso = self.dao.delete(id_fornecedor)
+            sucesso = self.dao.delete(self.fornecedor_selecionado.id)
             if sucesso:
+                self.fornecedor_selecionado = None
+                self.view.limpar_campos()
+                self.get_all()
                 self.view.exibir_mensagem("Fornecedor excluído com sucesso!")
             else:
                 self.view.exibir_mensagem("Fornecedor não encontrado.", False)
-        except ValueError:
-            self.view.exibir_mensagem("Erro: ID inválido", False)
+        except Exception as e:
+            self.view.exibir_mensagem("Problemas ao excluir fornecedor", False)
+
     def inicializar_sistema(self):
         while True:
             os.system('cls' if os.name == 'nt' else 'clear')
