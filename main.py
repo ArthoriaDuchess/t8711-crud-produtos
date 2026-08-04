@@ -48,7 +48,6 @@ class ErpApplication:
         self._dao_estados = Estado_DAO(
             self._database
         )
-
         self._ctrl_estados = Estado_Controller(
             dao=self._dao_estados,
             view=Estado_Terminal_View()
@@ -172,7 +171,6 @@ class ErpApplication:
                     janela_fornecedores,
                     self._ctrl_fornecedores
                 )                
-                self._ctrl_fornecedores.get_all()
                 self._ctrl_fornecedores.view.iniciar()
                 
 

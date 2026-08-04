@@ -11,23 +11,17 @@ class Estado_Controller:
     def save(self):
 
         try:
-
             nome, sigla = self.view.ler_dados_estado()
-
             estado = Estado(
                 None,
                 nome,
                 sigla
             )
-
             self.dao.save(estado)
-
             self.view.exibir_mensagem(
                 "Estado cadastrado com sucesso!"
             )
-
         except ValueError as e:
-
             self.view.exibir_mensagem(
                 f"Erro: {str(e)}",
                 False
