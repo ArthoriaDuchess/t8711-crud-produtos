@@ -1,91 +1,118 @@
-from colorama import init, Fore, Style
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parents[2]))
 
-init(autoreset=True)
+from app.models.estado import Estado
 
+import tkinter as tk
+from tkinter import messagebox
+from tkinter import ttk
 
-class Estado_Terminal_View:
-
-    def __init__(self):
-        self.titulo_sistema = "=== CRUD DE ESTADOS (MVC) ==="
-
-    def renderizar_menu(self):
-
-        print(Fore.CYAN + Style.BRIGHT + self.titulo_sistema)
-        print("1 - Cadastrar estado")
-        print("2 - Listar estados")
-        print("3 - Atualizar estado")
-        print("4 - Excluir estado")
-        print("0 - Sair")
-        print(Fore.CYAN + "=" * 50)
-
-        try:
-            return int(input("Escolha uma opção: "))
-        except ValueError:
-            return -1
-
-    def ler_campo(self, rotulo, valor_atual=None):
-
-        if valor_atual is not None:
-            prompt = f"{rotulo} [{Fore.GREEN}{valor_atual}{Style.RESET_ALL}]: "
-        else:
-            prompt = f"{rotulo}: "
-
-        valor = input(prompt)
-
-        if valor == "" and valor_atual is not None:
-            return valor_atual
-
-        return valor
-
-    def ler_dados_estado(self, estado_existente=None):
-
-        print(Fore.CYAN + Style.BRIGHT + "=== DADOS DO ESTADO ===")
-
-        nome = self.ler_campo(
-            "Nome",
-            estado_existente.nome if estado_existente else None
+class Estado_View:
+    def __init__(self, root, controller):
+        self.root = root
+        self.controller = controller
+        self.configurar_janela()
+        self.configurar_componentes()
+        self.configurar_treeview()
+        self.configurar_eventos()
+        
+    def configurar_janela(self):
+        self.root.title("CRUD de Estado")
+        self.root.geometry("800x600")
+        self.root.resizable(False,False)
+        
+    def criar_componentes(self):
+        self.lbl_titulo = tk.Label(
+            self.root,
+            text = "Cadastro de Estados",
+            font = ("Arial", 16, "Bold")
         )
-
-        sigla = self.ler_campo(
-            "Sigla",
-            estado_existente.sigla if estado_existente else None
+        self.lbl_titulo.grid(
+            row = 0,
+            column= 0,
+            columnspan= 4,
+            padx= 5,
+            pady= 5
         )
-
-        return nome, sigla
-
-    def ler_id(self):
-
-        return input("Digite o ID do estado: ")
-
-    def exibir_estados(self, estados):
-
-        print(Fore.YELLOW + "\n--- TABELA DE ESTADOS ---")
-
-        if not estados:
-            print("Nenhum estado cadastrado.")
-            return
-
-        print(f"{'ID':<5} | {'NOME':<30} | {'SIGLA':<5}")
-        print("-" * 48)
-
-        for estado in estados:
-
-            print(
-                f"{estado.id:<5} | "
-                f"{estado.nome:<30} | "
-                f"{estado.sigla:<5}"
-            )
-
-        print("-" * 48)
-
-    def exibir_mensagem(self, mensagem, sucesso=True):
-
-        cor = Fore.GREEN if sucesso else Fore.RED
-
-        print(cor + f"\n[STATUS] {mensagem}\n")
-
-        self.aguardar_entrada()
-
-    def aguardar_entrada(self):
-
-        input(Fore.WHITE + "Pressione Enter para continuar...")
+        self.frm_dados = tk.LabelFrame(
+            self.root,
+            text = "Dados do estado"
+        )
+        self.frm_dados.grid(
+            row= 1,
+            column= 0,
+            columnspan= 4,
+            padx= 10,
+            pady= 5,
+            sticky= "ew"
+        )
+        self.lbl_id = tk.Label(
+            self.frm_dados,
+            text= "ID: "
+        )
+        self.lbl_id.grid(
+            row= 0,
+            column= 0,
+            padx= 5,
+            pady= 5,
+            sticky= "w"
+        )
+        self.txt_id = tk.Entry(
+            self.frm_dados,
+            width= 10,
+            state= "readonly"
+        )
+        self.text_id.grid(
+            row= 0,
+            column= 1,
+            padx = 5,
+            pady = 5,
+            sticky= "w"
+        )
+        self.lbl_nome = tk.Label(
+            self.frm_dados,
+            text= "Nome: "
+        )
+        self.lbl_nome.grid(
+            row= 1,
+            column= 0,
+            padx= 5,
+            pady= 5,
+            sticky= "w"
+        )
+        self.txt_nome = tk.Entry(
+            self.frm_dados,
+            width= 40
+        )
+        self.text_nome.grid(
+            row= 1,
+            column= 1,
+            padx= 5,
+            pady= 5,
+            sticky= "w"
+        )
+        self.lbl_sigla = tk.Label(
+            self.frm_dados,
+            text= "Sigla: "
+        )
+        self.lbl_sigla.grid(
+            row= 1,
+            column= 2,
+            padx= 5,
+            pady= 5,
+            sticky= "w"
+        )
+        self.txt_sigla = tk.Entry(
+            self.frm_dados,
+            width= 40
+        )
+        self.txt_sigla.grid(
+            row= 1,
+            column= 3,
+            padx= 5,
+            pady= 5,
+            sticky= "w"
+        )
+    def iniciar(self):
+            self.root.mainloop()

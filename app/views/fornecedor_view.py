@@ -28,7 +28,7 @@ class Fornecedor_View:
         self.lbl_titulo = tk.Label(
             self.root,
             text = "Cadastro de Fornecedores",
-            font = ("Arial", 16, "bold"),
+            font = ("Arial", 16, "bold")
         )
         self.lbl_titulo.grid(
             row = 0,
