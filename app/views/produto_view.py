@@ -257,7 +257,8 @@ class Produto_View:
         )
         self.tbl_produtos.column(
             "id",
-            width = 10
+            width = 10,
+            anchor = "center"
         )
         self.tbl_produtos.column(
             "nome",

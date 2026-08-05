@@ -208,7 +208,8 @@ class Estado_View:
         )
         self.tbl_estados.column(
             "id",
-            width = 10
+            width = 10,
+            anchor = "center"
         )
         self.tbl_estados.column(
             "nome",
