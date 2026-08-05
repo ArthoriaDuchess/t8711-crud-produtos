@@ -252,7 +252,8 @@ class Fornecedor_View:
         )
         self.tbl_fornecedores.column(
             "id",
-            width = 10
+            width = 10,
+            anchor = "center"
         )
         self.tbl_fornecedores.column(
             "razao_social",

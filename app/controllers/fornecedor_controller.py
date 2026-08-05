@@ -5,6 +5,7 @@ class Fornecedor_Controller:
     def __init__(self, dao, view):
         self.dao = dao
         self.view = view
+        self.fornecedor_selecionado = None
 
 
     def new(self):
