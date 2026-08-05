@@ -114,5 +114,62 @@ class Estado_View:
             pady= 5,
             sticky= "w"
         )
+    def configurar_treeview(self):
+        self.lbl_estados["columns"] = (
+            "id",
+            "nome",
+            "sigla"
+        )
+        self.tbl_fornecedores.column(
+            "#0",
+            width= 0,
+            stretch = False
+        )
+        self.tbl_estados.column(
+            "id",
+            width= 10
+        )
+        self.tbl_estados.column(
+            "nome",
+            width= 50
+        )
+        self.tbl_estados.column(
+            "sigla",
+            width= 20
+        )
+        self.tbl_estados.heading(
+            "id",
+            text= "ID"
+        )
+        self.tbl_estados.heading(
+            "nome",
+            text= "Nome"
+        )
+        self.tbl_estados.heading(
+            "sigla",
+            text= "Sigla"
+        )
+        
+    def configurar_eventos(self):
+        self.btn_novo.config(
+            command = self.controller.new
+        )
+        self.btn_alterar.config(
+            command = self.controller.update
+        )
+        self.btn_excluir.config(
+            command = self.controller.delete
+        )
+        self.btn_estados.bind(
+            "<<TreeviewSelect>>",
+            self.controller.selecionar_fornecedores
+        )
+        
+    def preencher_campos(self, estados):
+        self.limpar_campos()
+        self.txt_id.config(state = "normal")
+        self.txt_id.insert
+    
+    
     def iniciar(self):
             self.root.mainloop()

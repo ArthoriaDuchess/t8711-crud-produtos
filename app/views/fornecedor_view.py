@@ -291,8 +291,8 @@ class Fornecedor_View:
         self.tbl_fornecedores.bind(
             "<<TreeviewSelect>>",
             self.controller.selecionar_fornecedor
-
         )
+        
     def preencher_campos(self, fornecedor):
 
         self.limpar_campos()
