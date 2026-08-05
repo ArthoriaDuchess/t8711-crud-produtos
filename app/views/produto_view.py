@@ -326,10 +326,12 @@ class Produto_View:
         )
     def carregar_fornecedores(self, fornecedores):
         self._fornecedores = fornecedores
-        self.cmb_fornecedores["values"] = [
-            f"{fornecedor.id} - {fornecedor.nome_fantasia}"
-            for fornecedor in fornecedores
-        ]
+        valores = []
+        for fornecedor in fornecedores:
+            valores.append(
+                f"{fornecedor.id} - {fornecedor.nome_fantasia}"
+            )
+        self.cmb_fornecedores["values"] = valores
         self.cmb_fornecedores.set("")
 
     def preencher_campos(self, produto):
