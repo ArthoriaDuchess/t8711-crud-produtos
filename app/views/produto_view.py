@@ -1,12 +1,8 @@
-
-
 from app.models.produto import Produto
 
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
-
-
 
 class Produto_View:
     def __init__(self, root, controller):

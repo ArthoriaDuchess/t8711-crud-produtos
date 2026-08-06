@@ -14,7 +14,7 @@ from app.controllers.estado_controller import Estado_Controller
 
 # Componentes de Cidades
 from app.dao.cidade_dao import Cidade_DAO
-from app.views.cidade_view import Cidade_Terminal_View
+from app.views.cidade_view import Cidade_View
 from app.controllers.cidade_controller import Cidade_Controller
 
 # Componentes de Fornecedores
@@ -65,7 +65,7 @@ class ErpApplication:
         self._ctrl_cidades = Cidade_Controller(
             dao=self._dao_cidades,
             estado_dao=self._dao_estados,
-            view=Cidade_Terminal_View()
+            view= self._view_cidades
         )
 
         # ===========================

@@ -1,7 +1,6 @@
 import os
 from app.models.estado import Estado
 
-
 class Estado_Controller:
     def __init__(self, dao, view):
         self.dao = dao
@@ -23,7 +22,7 @@ class Estado_Controller:
             self.get_all()
             self.view.exibir_mensagem("Estado cadastrado com sucesso!")
         except ValueError as e:
-            self.view.exibir_mensagem(f"Erro: {str(e)}", False)
+            self.view.exibir_mensagem(f"Erro: Entrada inválida. Tente novamente.", False)
 
     def get_all(self):
         estados = self.dao.get_all()

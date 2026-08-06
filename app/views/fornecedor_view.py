@@ -13,6 +13,7 @@ class Fornecedor_View:
     def __init__(self, root, controller):
         self.root = root
         self.controller = controller
+        
         self.configurar_janela()
         self.criar_componentes()
         self.configurar_treeview()
@@ -337,6 +338,7 @@ class Fornecedor_View:
         for item in self.tbl_fornecedores.get_children():
 
             self.tbl_fornecedores.delete(item)
+            
     def get_id_selecionado(self):
 
         item = self.tbl_fornecedores.selection()[0]
@@ -350,8 +352,6 @@ class Fornecedor_View:
             "Deseja realmente excluir este fornecedor?"
         )
         
-
-
     def ler_dados_fornecedor(self):
         razao_social = self.txt_razao_social.get()
         nome_fantasia = self.txt_nome_fantasia.get()

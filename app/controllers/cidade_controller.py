@@ -8,30 +8,29 @@ class Cidade_Controller:
         self.dao = dao
         self.estado_dao = estado_dao
         self.view = view
+        self.estado_selecionado = None
+        
+        
+    def new(self):
+        self.view.limpar_campos()
+        
+    def carregar_estados(self):
+        estados = self.estado_dao.get_all()
+        self.view.carregar_estados(estados)
 
     def save(self):
-
         try:
-
             estados = self.estado_dao.get_all()
-
             if not estados:
-
                 self.view.exibir_mensagem(
                     "Cadastre um estado antes de cadastrar cidades.",
                     False
                 )
-
                 return
-
             self.view.exibir_estados(estados)
-
             id_estado = int(self.view.ler_estado())
-
             estado = self.estado_dao.get_by_id(id_estado)
-
             if estado is None:
-
                 self.view.exibir_mensagem(
                     "Estado não encontrado.",
                     False
