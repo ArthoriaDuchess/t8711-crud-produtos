@@ -1,7 +1,3 @@
-import sys
-from pathlib import Path
-sys.path.append(str(Path(__file__).resolve().parents[2]))
-
 from app.models.estado import Estado
 
 import tkinter as tk
@@ -10,6 +6,7 @@ from tkinter import ttk
 
 
 class Estado_View:
+
     def __init__(self, root, controller):
         self.root = root
         self.controller = controller
@@ -19,340 +16,526 @@ class Estado_View:
         self.configurar_treeview()
         self.configurar_eventos()
 
+
     def configurar_janela(self):
-        self.root.title("CRUD de Estado")
-        self.root.geometry("1000x650")
+
+        self.root.title("✨ Estado Ultimate Edition ✨")
+        self.root.geometry("800x600")
         self.root.resizable(False, False)
+
+        # Fundo estilo Windows Vista Aero
+        self.root.configure(
+            bg="#0b5fa5"
+        )
 
     def criar_componentes(self):
 
+        # ==========================
+        # TÍTULO
+        # ==========================
+
         self.lbl_titulo = tk.Label(
             self.root,
-            text="Cadastro de Estados",
-            font=("Arial", 18, "bold")
+            text="🌎 Estado Manager",
+            font=("Segoe UI", 22, "bold"),
+            fg="white",
+            bg="#0b5fa5"
         )
+
         self.lbl_titulo.grid(
             row=0,
             column=0,
-            columnspan=4,
+            columnspan=2,
+            padx=5,
             pady=15
         )
+        
+        # ==========================
+        # ÁREA DOS DADOS
+        # ==========================
 
         self.frm_dados = tk.LabelFrame(
             self.root,
-            text="Dados do Estado",
-            padx=10,
-            pady=10
+            text="📋 Dados do Estado",
+            font=("Segoe UI", 10, "bold"),
+            bg="#dceeff",
+            fg="#084c85",
+            bd=2,
+            relief="groove"
         )
 
         self.frm_dados.grid(
             row=1,
             column=0,
-            columnspan=4,
-            padx=20,
-            pady=10,
+            columnspan=2,
+            padx=10,
+            pady=5,
             sticky="ew"
         )
 
-        self.root.grid_columnconfigure(0, weight=1)
+        self.frm_dados.grid_columnconfigure(
+            0,
+            weight=0
+        )
 
+        self.frm_dados.grid_columnconfigure(
+            1,
+            weight=1
+        )
         # ID
+
         self.lbl_id = tk.Label(
             self.frm_dados,
-            text="ID:"
+            text="ID:",
+            bg="#dceeff",
+            font=("Segoe UI", 10)
         )
+
         self.lbl_id.grid(
             row=0,
             column=0,
             padx=5,
-            pady=8,
+            pady=5,
             sticky="w"
         )
 
+
         self.txt_id = tk.Entry(
             self.frm_dados,
-            width=12,
-            state="readonly"
+            width=10,
+            state="readonly",
+            font=("Segoe UI", 10)
         )
+
         self.txt_id.grid(
             row=0,
             column=1,
             padx=5,
-            pady=8,
+            pady=5,
             sticky="w"
         )
-
         # Nome
+
         self.lbl_nome = tk.Label(
             self.frm_dados,
-            text="Nome:"
+            text="Nome:",
+            bg="#dceeff",
+            font=("Segoe UI", 10)
         )
+
         self.lbl_nome.grid(
             row=1,
             column=0,
             padx=5,
-            pady=8,
+            pady=5,
             sticky="w"
         )
 
         self.txt_nome = tk.Entry(
             self.frm_dados,
-            width=55
+            width=30,
+            font=("Segoe UI", 10)
         )
+
         self.txt_nome.grid(
             row=1,
             column=1,
             padx=5,
-            pady=8,
+            pady=5,
             sticky="w"
         )
-
         # Sigla
+
         self.lbl_sigla = tk.Label(
             self.frm_dados,
-            text="Sigla:"
+            text="Sigla:",
+            bg="#dceeff",
+            font=("Segoe UI", 10)
         )
+
         self.lbl_sigla.grid(
-            row=1,
-            column=2,
-            padx=10,
-            pady=8,
+            row=2,
+            column=0,
+            padx=5,
+            pady=5,
             sticky="w"
         )
 
         self.txt_sigla = tk.Entry(
             self.frm_dados,
-            width=8
-        )
-        self.txt_sigla.grid(
-            row=1,
-            column=3,
-            padx=5,
-            pady=8,
-            sticky="w"
+            width=5,
+            font=("Segoe UI", 10)
         )
 
-        # Treeview
-        self.tbl_estados = ttk.Treeview(self.root)
+        self.txt_sigla.grid(
+            row=2,
+            column=1,
+            padx=5,
+            pady=5,
+            sticky="w"
+        )
+        # ==========================
+        # BOTÕES
+        # ==========================
+
+        self.frm_botoes = tk.Frame(
+            self.frm_dados,
+            bg="#dceeff",
+            border=2,
+            relief="groove"
+        )
+
+        self.frm_botoes.grid(
+            row=3,
+            column=0,
+            columnspan=2,
+            padx=10,
+            pady=10
+        )
+
+        estilo_botao = {
+            "width": 15,
+            "font": ("Segoe UI", 10, "bold"),
+            "relief": "raised",
+            "bd": 2
+        }
+
+        self.btn_novo = tk.Button(
+            self.frm_botoes,
+            text="🆕 Novo",
+            bg="#b7e3ff",
+            **estilo_botao
+        )
+
+        self.btn_novo.grid(
+            row=0,
+            column=0,
+            padx=5,
+            pady=5
+        )
+
+        self.btn_salvar = tk.Button(
+            self.frm_botoes,
+            text="💾 Salvar",
+            bg="#8fd3ff",
+            **estilo_botao
+        )
+
+        self.btn_salvar.grid(
+            row=0,
+            column=1,
+            padx=5,
+            pady=5
+        )
+        self.btn_alterar = tk.Button(
+            self.frm_botoes,
+            text="✏ Alterar",
+            bg="#fff2a8",
+            **estilo_botao
+        )
+
+        self.btn_alterar.grid(
+            row=0,
+            column=2,
+            padx=5,
+            pady=5
+        )
+
+        self.btn_excluir = tk.Button(
+            self.frm_botoes,
+            text="🗑 Excluir",
+            bg="#ffaaaa",
+            **estilo_botao
+        )
+
+        self.btn_excluir.grid(
+            row=0,
+            column=3,
+            padx=5,
+            pady=5
+        )
+
+        self.btn_fechar = tk.Button(
+            self.frm_botoes,
+            text="🚪 Fechar",
+            bg="#dddddd",
+            **estilo_botao
+        )
+
+        self.btn_fechar.grid(
+            row=0,
+            column=4,
+            padx=5,
+            pady=5
+        )
+        # ==========================
+        # TABELA DE ESTADOS
+        # ==========================
+
+        self.tbl_estados = ttk.Treeview(
+            self.root,
+            height=12
+        )
 
         self.tbl_estados.grid(
             row=2,
             column=0,
-            columnspan=4,
-            padx=20,
+            columnspan=2,
+            padx=10,
             pady=10,
             sticky="nsew"
         )
 
-        # Frame dos botões
-        self.frm_botoes = tk.Frame(
-            self.frm_dados,
-            border = 2,
-            relief = "groove"
-        )
-        self.frm_botoes.grid(
-            row = 4,
-            column = 0,
-            padx = 10,
-            pady = 5,
-            columnspan = 4,
-        )
-        self.btn_novo = tk.Button(
-            self.frm_botoes,
-            text = "Novo",
-            width = 15
-        )
-        self.btn_novo.grid(
-            row = 0,
-            column = 0,
-            padx = 5,
-            pady = 5
-        )
-        self.btn_salvar = tk.Button(
-            self.frm_botoes,
-            text = "Salvar",
-            width = 15
-        )
-        self.btn_salvar.grid(
-            row = 0,
-            column = 1,
-            padx = 5,
-            pady = 5
-        )        
-        self.btn_alterar = tk.Button(
-            self.frm_botoes,
-            text = "Alterar",
-            width = 15
-        )
-        self.btn_alterar.grid(
-            row = 0,
-            column = 2,
-            padx = 5,
-            pady = 5
-        )        
-        self.btn_excluir = tk.Button(
-            self.frm_botoes,
-            text = "Excluir",
-            width = 15
-        )
-        self.btn_excluir.grid(
-            row = 0,
-            column = 3,
-            padx = 5,
-            pady = 5
-        )   
-        self.btn_fechar = tk.Button(
-            self.frm_botoes,
-            text = "Fechar",
-            width = 15
-        )
-        self.btn_fechar.grid(
-            row = 0,
-            column = 4,
-            padx = 5,
-            pady = 5
-        )
-        self.tbl_estados = ttk.Treeview(
+        # Barra de status estilo Windows
+
+        self.lbl_status = tk.Label(
             self.root,
-            height = 10
-        )  
-        self.tbl_estados.grid(
-            row = 3,
-            column = 0,
-            columnspan = 4,
-            padx = 10,
-            pady = 10,
-            sticky = "nsew"
+            text="🟢 Sistema iniciado | Aero Mode ativado",
+            anchor="w",
+            fg="white",
+            bg="#084c85",
+            font=("Segoe UI", 9)
         )
+
+        self.lbl_status.grid(
+            row=3,
+            column=0,
+            columnspan=2,
+            sticky="ew"
+        )
+
+
+
     def configurar_treeview(self):
+
+        estilo = ttk.Style()
+
+
+        estilo.configure(
+            "Vista.Treeview",
+            font=("Segoe UI", 10),
+            rowheight=28
+        )
+
+
+        estilo.configure(
+            "Vista.Treeview.Heading",
+            font=("Segoe UI", 10, "bold")
+        )
+
+
+        self.tbl_estados.configure(
+            style="Vista.Treeview"
+        )
+
+
+
         self.tbl_estados["columns"] = (
-        "id",
-        "nome",
-        "sigla"
-    )
+            "id",
+            "nome",
+            "sigla"
+        )
+
 
         self.tbl_estados.column(
-            "#0", 
-            width=0, 
+            "#0",
+            width=0,
             stretch=False
         )
 
+
         self.tbl_estados.column(
             "id",
-            width=80,
+            width=50,
+            anchor="center"
         )
+
 
         self.tbl_estados.column(
             "nome",
-            width=650
+            width=300
         )
+
 
         self.tbl_estados.column(
             "sigla",
-            width=120,
+            width=100,
+            anchor="center"
         )
+
+
 
         self.tbl_estados.heading(
             "id",
             text="ID"
         )
 
+
         self.tbl_estados.heading(
             "nome",
-            text="Nome"
+            text="Nome do Estado"
         )
+
 
         self.tbl_estados.heading(
             "sigla",
             text="Sigla"
         )
-
     def configurar_eventos(self):
+
         self.btn_novo.config(
             command=self.controller.new
         )
-
+        self.btn_salvar.config(
+            command=self.controller.save
+        )
         self.btn_alterar.config(
             command=self.controller.update
         )
-
         self.btn_excluir.config(
             command=self.controller.delete
         )
-
+        self.btn_fechar.config(
+            command=self.fechar
+        )
         self.tbl_estados.bind(
             "<<TreeviewSelect>>",
             self.controller.selecionar_estado
         )
 
-    def preencher_campos(self, estados):
+
+    def preencher_campos(self, estado):
+
         self.limpar_campos()
 
-        self.txt_id.config(state="normal")
+
+        self.txt_id.config(
+            state="normal"
+        )
+
+
         self.txt_id.insert(
-            0, 
-            str(estados.id)
+            0,
+            str(estado.id)
         )
-        self.txt_id.config(state="readonly")
+
+
+        self.txt_id.config(
+            state="readonly"
+        )
+
+
         self.txt_nome.insert(
-            0, 
-            estados.nome
+            0,
+            estado.nome
         )
+
+
         self.txt_sigla.insert(
-            0, 
-            estados.sigla
+            0,
+            estado.sigla
         )
+
+
 
     def limpar_campos(self):
-        self.txt_id.config(state="normal")
-        self.txt_id.delete(0, tk.END)
-        self.txt_id.config(state="readonly")
-        self.txt_nome.delete(0, tk.END)
-        self.txt_sigla.delete(0, tk.END)
+
+        self.txt_id.config(
+            state="normal"
+        )
+
+
+        self.txt_id.delete(
+            0,
+            tk.END
+        )
+
+
+        self.txt_id.config(
+            state="readonly"
+        )
+
+
+        self.txt_nome.delete(
+            0,
+            tk.END
+        )
+
+
+        self.txt_sigla.delete(
+            0,
+            tk.END
+        )
+
+
         self.txt_nome.focus()
 
+
+
     def limpar_treeview(self):
-        
+
         for item in self.tbl_estados.get_children():
-            
-            self.tbl_estados.delete(item)
+
+            self.tbl_estados.delete(
+                item
+            )
+
+
 
     def get_id_selecionado(self):
-        
-        item = self.tbl_estados.selection()[0]
-        
-        return self.tbl_estados.item(item)["values"][0]
+
+        selecionado = self.tbl_estados.selection()
+
+        if not selecionado:
+            return None
+        item = self.tbl_estados.item(
+            selecionado[0]
+        )
+        return item["values"][0]
 
     def confirmar_exclusao(self):
-        
+
         return messagebox.askyesno(
-            "Confirmação",
-            "Deseja realmente excluir o estado selecionado?"
+            "Confirmação Vista",
+            "Deseja realmente excluir este estado? 🗑"
         )
 
     def ler_dados_estado(self):
+
         nome = self.txt_nome.get()
+
         sigla = self.txt_sigla.get()
+
+
         return nome, sigla
 
+
+
     def exibir_mensagem(self, mensagem, sucesso=True):
+
         if sucesso:
+
             messagebox.showinfo(
-                "Sucesso",
+                "Estado Vista Ultimate",
                 mensagem
             )
+
         else:
+
             messagebox.showerror(
-                "Mini ERP",
+                "Estado Vista Ultimate",
                 mensagem
             )
+
+
 
     def exibir_estados(self, estados):
-        
+
         self.limpar_treeview()
 
+
         for estado in estados:
-            
+
             self.tbl_estados.insert(
                 "",
                 tk.END,
@@ -363,5 +546,27 @@ class Estado_View:
                 )
             )
 
+
+        self.lbl_status.config(
+            text=f"🟢 {len(estados)} estados carregados | Sistema funcionando perfeitamente"
+        )
+
+
+
+    def fechar(self):
+
+        resposta = messagebox.askyesno(
+            "Estado Vista",
+            "Deseja fechar o sistema?"
+        )
+
+
+        if resposta:
+
+            self.root.destroy()
+
+
+
     def iniciar(self):
-        self.root.mainloop()
+
+        self.controller.get_all()

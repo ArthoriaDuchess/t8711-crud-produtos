@@ -65,7 +65,7 @@ class ErpApplication:
         self._ctrl_cidades = Cidade_Controller(
             dao=self._dao_cidades,
             estado_dao=self._dao_estados,
-            view= self._view_cidades
+            view=None
         )
 
         # ===========================
@@ -195,9 +195,13 @@ class ErpApplication:
                 self._ctrl_estados.view.iniciar()
 
             elif opcao == 6:
+                janela_cidades = tk.Tk()
+                self._ctrl_cidades.view = Cidade_View(
+                    janela_cidades,
+                    self._ctrl_cidades
+                )
 
-                self._ctrl_cidades.inicializar_sistema()
-
+                self._ctrl_cidades.view.iniciar()
             else:
 
                 print(Fore.RED + "\nOpção inválida!")
